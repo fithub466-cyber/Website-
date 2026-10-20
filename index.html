@@ -198,7 +198,7 @@
       font-weight: 500;
       background: #141414;
       border: 1px solid #252525;
-      padding: 5px 14px;
+      padding: 4px 14px;
       border-radius: 20px;
       display: flex;
       align-items: center;
@@ -206,8 +206,8 @@
     }
 
     .user-avatar-small {
-      width: 22px;
-      height: 22px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       background: #5865F2;
       display: flex;
@@ -215,6 +215,7 @@
       justify-content: center;
       font-size: 0.75rem;
       color: #fff;
+      overflow: hidden;
     }
 
     .btn-logout {
@@ -608,7 +609,6 @@
       text-align: center;
     }
 
-    /* Discord Button */
     .btn-discord-auth {
       width: 100%;
       background: #5865F2;
@@ -917,7 +917,7 @@
 
   </main>
 
-  <!-- ================= MODAL: Login & Register (พร้อม Discord) ================= -->
+  <!-- ================= MODAL: Login & Register ================= -->
   <div class="modal-overlay" id="authModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModals()"><i class="fa-solid fa-xmark"></i></button>
@@ -1000,7 +1000,6 @@
     </div>
   </div>
 
-  <!-- Toast Notification Box -->
   <div class="toast" id="toastBox">
     <i class="fa-solid fa-bell" style="color: #c89565;"></i>
     <span id="toastMsg">แจ้งเตือน</span>
@@ -1008,7 +1007,10 @@
 
   <!-- ================= JavaScript Core Engine ================= -->
   <script>
-    /* ================= 1. Translations (TH / EN) ================= */
+    // ข้อมูล Discord Application ของคุณ
+    const DISCORD_CLIENT_ID = "1561942018475819010"; 
+    const REDIRECT_URI = window.location.origin + window.location.pathname;
+
     const translations = {
       th: {
         nav_home: "หน้าหลัก",
@@ -1082,6 +1084,8 @@
 
     let currentLang = 'th';
     let authMode = 'login';
+    let currentUser = JSON.parse(localStorage.getItem('lrapx_user')) || null;
+    let purchaseHistory = JSON.parse(localStorage.getItem('lrapx_history')) || [];
 
     function setLanguage(lang) {
       currentLang = lang;
@@ -1097,10 +1101,6 @@
       localStorage.setItem('preferred_lang', lang);
     }
 
-    /* ================= 2. User & Wallet State Management ================= */
-    let currentUser = JSON.parse(localStorage.getItem('lrapx_user')) || null;
-    let purchaseHistory = JSON.parse(localStorage.getItem('lrapx_history')) || [];
-
     function updateUIState() {
       const balanceEl = document.getElementById('userBalanceText');
       const loginBtn = document.getElementById('navLoginBtn');
@@ -1114,9 +1114,8 @@
         displayName.textContent = currentUser.username;
         balanceEl.textContent = `฿${currentUser.balance.toFixed(2)}`;
 
-        if (currentUser.isDiscord) {
-          avatarBadge.innerHTML = `<i class="fa-brands fa-discord"></i>`;
-          avatarBadge.style.background = "#5865F2";
+        if (currentUser.isDiscord && currentUser.avatar) {
+          avatarBadge.innerHTML = `<img src="${currentUser.avatar}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
         } else {
           avatarBadge.innerHTML = `<i class="fa-regular fa-user"></i>`;
           avatarBadge.style.background = "#333";
@@ -1138,7 +1137,50 @@
       updateUIState();
     }
 
-    /* ================= 3. Authentication & Discord Login ================= */
+    // ฟังก์ชันไปหน้า Discord จริง (แก้ไขการเช็คแล้ว)
+    function handleDiscordLogin() {
+      const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+      window.location.href = discordAuthUrl;
+    }
+
+    // ตรวจสอบการ Callback กลับมาจาก Discord
+    function checkDiscordCallback() {
+      const fragment = new URLSearchParams(window.location.hash.slice(1));
+      const accessToken = fragment.get('access_token');
+      const tokenType = fragment.get('token_type');
+
+      if (accessToken) {
+        history.replaceState(null, null, ' ');
+
+        fetch('https://discord.com/api/users/@me', {
+          headers: {
+            authorization: `${tokenType} ${accessToken}`
+          }
+        })
+        .then(res => res.json())
+        .then(data => {
+          const avatarUrl = data.avatar 
+            ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`
+            : `https://cdn.discordapp.com/embed/avatars/${(data.id >> 22) % 6}.png`;
+
+          currentUser = {
+            username: data.global_name || data.username,
+            discordId: data.id,
+            avatar: avatarUrl,
+            balance: currentUser?.balance || 0.00,
+            isDiscord: true
+          };
+
+          saveUserState();
+          showToast(`ยินดีต้อนรับคุณ ${currentUser.username} เข้าสู่ระบบสำเร็จ!`);
+        })
+        .catch(err => {
+          console.error(err);
+          showToast("เกิดข้อผิดพลาดในการเชื่อมต่อ Discord");
+        });
+      }
+    }
+
     function openAuthModal(mode) {
       authMode = mode;
       switchAuthTab(mode);
@@ -1165,40 +1207,21 @@
       }
     }
 
-    // ฟังก์ชันเข้าสู่ระบบด้วย Discord
-    function handleDiscordLogin() {
-      // สามารถใส่ URL OAuth2 ของ Discord Bot จริงตรงนี้ได้ เช่น:
-      // window.location.href = "https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&response_type=code&scope=identify";
-
-      // การทำงานจำลองดึงบัญชี Discord เข้าสู่ระบบทันที:
-      const randomDiscordTag = Math.floor(1000 + Math.random() * 9000);
-      currentUser = {
-        username: `LrapX_User#${randomDiscordTag}`,
-        balance: currentUser?.balance || 0.00,
-        isDiscord: true
-      };
-
-      saveUserState();
-      closeModals();
-      showToast(currentLang === 'th' ? `เชื่อมต่อ Discord สำเร็จ! ยินดีต้อนรับ ${currentUser.username}` : `Connected with Discord! Welcome ${currentUser.username}`);
-    }
-
     function handleAuthSubmit(e) {
       e.preventDefault();
       const userField = document.getElementById('authUsername').value.trim();
       if (!userField) return;
 
-      if (authMode === 'register') {
-        currentUser = { username: userField, balance: 0.00, isDiscord: false };
-        showToast(currentLang === 'th' ? `ยินดีต้อนรับคุณ ${userField} สมัครสมาชิกสำเร็จ!` : `Welcome ${userField}, registered successfully!`);
-      } else {
-        currentUser = { username: userField, balance: currentUser?.balance || 0.00, isDiscord: false };
-        showToast(currentLang === 'th' ? `ยินดีต้อนรับกลับ ${userField}` : `Welcome back ${userField}!`);
-      }
+      currentUser = { 
+        username: userField, 
+        balance: currentUser?.balance || 0.00, 
+        isDiscord: false 
+      };
 
       saveUserState();
       closeModals();
       document.getElementById('authForm').reset();
+      showToast(currentLang === 'th' ? `ยินดีต้อนรับ ${userField}` : `Welcome ${userField}`);
     }
 
     function logoutUser() {
@@ -1207,7 +1230,6 @@
       showToast(currentLang === 'th' ? 'ออกจากระบบแล้ว' : 'Logged out');
     }
 
-    /* ================= 4. Top-up Wallet ================= */
     function openTopupModal() {
       if (!currentUser) {
         showToast(currentLang === 'th' ? 'กรุณาเข้าสู่ระบบก่อนเติมเงิน' : 'Please login first');
@@ -1237,7 +1259,6 @@
       showToast(currentLang === 'th' ? `เติมเงินสำเร็จ ฿${amt.toFixed(2)}!` : `Top-up ฿${amt.toFixed(2)} successful!`);
     }
 
-    /* ================= 5. Purchase Engine ================= */
     function promptPurchase(itemName, price) {
       if (!currentUser) {
         showToast(currentLang === 'th' ? 'กรุณาเข้าสู่ระบบก่อนซื้อสินค้า' : 'Please login to purchase');
@@ -1246,19 +1267,16 @@
       }
 
       if (currentUser.balance < price) {
-        showToast(currentLang === 'th' ? `ยอดเงินไม่เพียงพอ (ต้องการ ฿${price.toFixed(2)}) กรุณาเติมเงิน` : `Insufficient balance. Please top-up`);
+        showToast(currentLang === 'th' ? `ยอดเงินไม่พอ (ต้องการ ฿${price.toFixed(2)}) กรุณาเติมเงิน` : `Insufficient balance. Please top-up`);
         openTopupModal();
         return;
       }
 
-      // หักยอดเงิน
       currentUser.balance -= price;
       saveUserState();
 
-      // สร้างคีย์สุ่มสำหรับ LrapX Hub
       const randomKey = `LrapX-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
 
-      // บันทึกประวัติ
       const purchaseItem = {
         date: new Date().toLocaleDateString(currentLang === 'th' ? 'th-TH' : 'en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
         item: itemName,
@@ -1270,7 +1288,6 @@
       localStorage.setItem('lrapx_history', JSON.stringify(purchaseHistory));
       renderHistoryTable();
 
-      // แสดง Popup คีย์ที่ได้รับ
       document.getElementById('newGeneratedKey').textContent = randomKey;
       document.getElementById('successModal').style.display = 'flex';
     }
@@ -1288,7 +1305,6 @@
       });
     }
 
-    /* ================= 6. Tab & History View ================= */
     function switchMainTab(tab) {
       const prodSec = document.getElementById('productsSection');
       const histSec = document.getElementById('historySection');
@@ -1335,7 +1351,6 @@
       });
     }
 
-    /* ================= 7. Utilities & Modal Controls ================= */
     function closeModals() {
       document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
     }
@@ -1347,10 +1362,10 @@
       setTimeout(() => { t.style.display = 'none'; }, 3200);
     }
 
-    // เริ่มต้นระบบ
     window.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('preferred_lang') || 'th';
       setLanguage(savedLang);
+      checkDiscordCallback(); // ตรวจสอบสถานะการล็อกอิน Discord อัตโนมัติ
       updateUIState();
     });
   </script>
