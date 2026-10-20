@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LrapX Hub - Store & Key License</title>
+  <title>LrapX Hub - Official Key Store</title>
   
   <!-- Google Fonts: Kanit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,8 +13,10 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+  <!-- Supabase JS Library (เชื่อมต่อฐานข้อมูลจริง) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
-    /* Reset & Global */
     * {
       margin: 0;
       padding: 0;
@@ -38,7 +40,7 @@
       width: 100%;
     }
 
-    /* ================= Top Navigation Bar ================= */
+    /* Navbar */
     .navbar {
       background-color: #000000;
       border-bottom: 1px solid #1a1a1a;
@@ -83,7 +85,7 @@
       border: 1px solid #333;
     }
 
-    /* Language Switcher */
+    /* Lang Switcher */
     .lang-switcher {
       display: flex;
       background: #151515;
@@ -142,7 +144,7 @@
       border: 1px solid #282828;
     }
 
-    /* Wallet & User Action */
+    /* Wallet Widget */
     .wallet-box {
       background: #0d0d0d;
       border: 1px solid #222222;
@@ -168,7 +170,6 @@
       border-radius: 12px;
       font-size: 0.78rem;
       cursor: pointer;
-      transition: 0.2s;
     }
     .btn-topup-nav:hover { background: #c89565; color: #000; }
 
@@ -229,7 +230,7 @@
     }
     .btn-logout:hover { background: #ff5e5e1a; }
 
-    /* ================= Store Header ================= */
+    /* Store Header */
     .store-header {
       padding-top: 40px;
       padding-bottom: 24px;
@@ -299,7 +300,7 @@
       padding-left: 16px;
     }
 
-    /* ================= Store Navigation Tabs ================= */
+    /* Tabs & Filters */
     .store-tabs {
       display: flex;
       gap: 36px;
@@ -358,7 +359,7 @@
       font-weight: 500;
     }
 
-    /* ================= Product Grid & Cards ================= */
+    /* Product Grid */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 320px));
@@ -409,6 +410,20 @@
       background: #736b5c;
     }
 
+    .stock-badge {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid #333;
+      color: #c89565;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 12px;
+      z-index: 2;
+    }
+
     .product-img-box {
       width: 100%;
       height: 290px;
@@ -450,7 +465,6 @@
       color: #fff;
       line-height: 1.2;
       margin-bottom: 12px;
-      text-transform: none;
     }
 
     .key-box-logo span {
@@ -517,7 +531,7 @@
       color: #000;
     }
 
-    /* ================= History View ================= */
+    /* History Table */
     #historySection {
       display: none;
       margin-bottom: 80px;
@@ -564,7 +578,7 @@
     }
     .btn-copy-small:hover { color: #c89565; }
 
-    /* ================= Modal Styles ================= */
+    /* Modals */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -624,53 +638,8 @@
       gap: 12px;
       cursor: pointer;
       margin-bottom: 18px;
-      transition: background 0.2s, transform 0.1s;
     }
-    .btn-discord-auth:hover {
-      background: #4752c4;
-      transform: translateY(-1px);
-    }
-
-    .auth-divider {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      margin-bottom: 18px;
-      color: #666;
-      font-size: 0.82rem;
-    }
-    .auth-divider::before, .auth-divider::after {
-      content: '';
-      flex: 1;
-      border-bottom: 1px solid #222;
-    }
-    .auth-divider:not(:empty)::before { margin-right: .8em; }
-    .auth-divider:not(:empty)::after { margin-left: .8em; }
-
-    .auth-tab-switch {
-      display: flex;
-      background: #161616;
-      border-radius: 12px;
-      padding: 4px;
-      margin-bottom: 20px;
-    }
-
-    .auth-tab-btn {
-      flex: 1;
-      padding: 8px;
-      border: none;
-      background: transparent;
-      color: #888;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.95rem;
-    }
-
-    .auth-tab-btn.active {
-      background: #c89565;
-      color: #000;
-      font-weight: 600;
-    }
+    .btn-discord-auth:hover { background: #4752c4; }
 
     .form-group {
       margin-bottom: 16px;
@@ -729,7 +698,6 @@
     }
     .btn-quick:hover { border-color: #c89565; color: #fff; }
 
-    /* Toast Notification */
     .toast {
       position: fixed;
       bottom: 25px;
@@ -749,7 +717,7 @@
 </head>
 <body>
 
-  <!-- ================= Top Navigation Bar ================= -->
+  <!-- Top Navbar -->
   <header class="navbar">
     <div class="container nav-inner">
       <div class="nav-left">
@@ -760,7 +728,7 @@
           <span>LrapX Hub</span>
         </a>
 
-        <!-- TH-EN Switcher -->
+        <!-- TH / EN -->
         <div class="lang-switcher" id="langToggle">
           <button class="lang-btn active" id="btn-th" onclick="setLanguage('th')">TH</button>
           <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
@@ -777,7 +745,7 @@
         </nav>
       </div>
 
-      <!-- Right side: Wallet & Login/Profile -->
+      <!-- Right: Wallet & Profile -->
       <div class="nav-right">
         <div class="wallet-box">
           <span data-i18n="wallet_label">ยอดเงิน</span> 
@@ -785,13 +753,11 @@
           <button class="btn-topup-nav" onclick="openTopupModal()" title="เติมเงิน">+ เติมเงิน</button>
         </div>
 
-        <!-- Login Button -->
-        <button class="btn-login" id="navLoginBtn" onclick="openAuthModal('login')">
-          <i class="fa-regular fa-user"></i>
+        <button class="btn-login" id="navLoginBtn" onclick="openAuthModal()">
+          <i class="fa-brands fa-discord"></i>
           <span data-i18n="btn_login">เข้าสู่ระบบ</span>
         </button>
 
-        <!-- Profile Bar -->
         <div class="user-profile" id="userProfileBar">
           <div class="user-name-tag">
             <div class="user-avatar-small" id="userAvatarBadge"><i class="fa-brands fa-discord"></i></div>
@@ -803,10 +769,10 @@
     </div>
   </header>
 
-  <!-- ================= Main Content Container ================= -->
+  <!-- Main Container -->
   <main class="container">
     
-    <!-- Header: Title & Affiliate Card -->
+    <!-- Store Header -->
     <section class="store-header">
       <div class="store-title-area">
         <h1 data-i18n="store_heading">ร้านค้า</h1>
@@ -825,7 +791,7 @@
       </div>
     </section>
 
-    <!-- Main Navigation Tabs -->
+    <!-- Navigation Tabs -->
     <nav class="store-tabs">
       <button class="tab-btn active" id="tabBtnProducts" onclick="switchMainTab('products')">
         <i class="fa-solid fa-box-archive"></i>
@@ -837,7 +803,7 @@
       </button>
     </nav>
 
-    <!-- SECTION: Products Grid View -->
+    <!-- Product Grid View -->
     <div id="productsSection">
       <div class="filter-pills">
         <button class="pill-btn active" data-i18n="pill_all">ทั้งหมด</button>
@@ -847,8 +813,9 @@
 
       <section class="products-grid">
         <!-- 30 Days -->
-        <div class="product-card" onclick="promptPurchase('LrapX Hub VIP 30 Days', 109.00)">
+        <div class="product-card" onclick="promptPurchase('VIP 30 Days', 109.00)">
           <div class="tag-badge">HOT</div>
+          <div class="stock-badge" id="stockBadge30D">คงเหลือ: กำลังโหลด...</div>
           <div class="product-img-box">
             <div class="key-box-mockup">
               <i class="fa-solid fa-key" style="color: #c89565; font-size: 0.9rem; margin-bottom: 4px;"></i>
@@ -872,8 +839,9 @@
         </div>
 
         <!-- 10 Days -->
-        <div class="product-card" onclick="promptPurchase('LrapX Hub VIP 10 Days', 59.00)">
+        <div class="product-card" onclick="promptPurchase('VIP 10 Days', 59.00)">
           <div class="tag-badge">LIMITED</div>
+          <div class="stock-badge" id="stockBadge10D">คงเหลือ: กำลังโหลด...</div>
           <div class="product-img-box">
             <div class="key-box-mockup">
               <i class="fa-solid fa-key" style="color: #c89565; font-size: 0.9rem; margin-bottom: 4px;"></i>
@@ -898,7 +866,7 @@
       </section>
     </div>
 
-    <!-- SECTION: Purchase History View -->
+    <!-- Purchase History View -->
     <div id="historySection">
       <table class="history-table">
         <thead>
@@ -910,54 +878,34 @@
           </tr>
         </thead>
         <tbody id="historyTableBody">
-          <!-- Populated by JS -->
+          <!-- Load from Supabase Database -->
         </tbody>
       </table>
     </div>
 
   </main>
 
-  <!-- ================= MODAL: Login & Register ================= -->
+  <!-- MODAL: Discord Login -->
   <div class="modal-overlay" id="authModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModals()"><i class="fa-solid fa-xmark"></i></button>
-      <h3 class="modal-title" id="authModalTitle">เข้าสู่ระบบ LrapX Hub</h3>
+      <h3 class="modal-title" style="margin-bottom: 10px;">เข้าสู่ระบบ LrapX Hub</h3>
+      <p style="color:#888; font-size:0.9rem; text-align:center; margin-bottom: 22px;">เข้าสู่ระบบด้วยบัญชี Discord เพื่อซื้อคีย์และดูประวัติ</p>
 
-      <!-- Discord Login Button -->
       <button type="button" class="btn-discord-auth" onclick="handleDiscordLogin()">
         <i class="fa-brands fa-discord" style="font-size: 1.3rem;"></i>
         <span data-i18n="btn_discord_login">เข้าสู่ระบบด้วย Discord</span>
       </button>
-
-      <div class="auth-divider" data-i18n="auth_divider">หรือดำเนินการด้วยบัญชีผู้ใช้</div>
-
-      <div class="auth-tab-switch">
-        <button class="auth-tab-btn active" id="tabAuthLogin" onclick="switchAuthTab('login')">เข้าสู่ระบบ</button>
-        <button class="auth-tab-btn" id="tabAuthRegister" onclick="switchAuthTab('register')">สมัครสมาชิก</button>
-      </div>
-
-      <form id="authForm" onsubmit="handleAuthSubmit(event)">
-        <div class="form-group">
-          <label data-i18n="label_username">ชื่อผู้ใช้งาน (Username)</label>
-          <input type="text" id="authUsername" class="form-control" placeholder="กรอกชื่อผู้ใช้..." required>
-        </div>
-        <div class="form-group">
-          <label data-i18n="label_password">รหัสผ่าน (Password)</label>
-          <input type="password" id="authPassword" class="form-control" placeholder="••••••••" required>
-        </div>
-        <button type="submit" class="btn-submit" id="authSubmitBtn">เข้าสู่ระบบ</button>
-      </form>
     </div>
   </div>
 
-  <!-- ================= MODAL: Top-up Wallet ================= -->
+  <!-- MODAL: Top-up Wallet -->
   <div class="modal-overlay" id="topupModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModals()"><i class="fa-solid fa-xmark"></i></button>
       <h3 class="modal-title" data-i18n="topup_title">เติมเงินเข้าบัญชี</h3>
-      
       <p style="font-size:0.85rem; color:#888; margin-bottom:14px; text-align:center;" data-i18n="topup_sub">
-        เลือกจำนวนเงินเพื่อเติมเข้ากระเป๋า LrapX Hub
+        เลือกจำนวนเงินที่ต้องการเติมเข้ากระเป๋า LrapX Hub
       </p>
 
       <div class="quick-amt-btns">
@@ -980,7 +928,7 @@
     </div>
   </div>
 
-  <!-- ================= MODAL: Key Success ================= -->
+  <!-- MODAL: Key Success -->
   <div class="modal-overlay" id="successModal">
     <div class="modal-card" style="text-align: center;">
       <button class="modal-close" onclick="closeModals()"><i class="fa-solid fa-xmark"></i></button>
@@ -990,7 +938,7 @@
       
       <div style="background:#000; border:1px solid #333; padding:14px; border-radius:10px; margin-bottom:20px;">
         <div id="newGeneratedKey" style="font-family: monospace; font-size: 1.15rem; color:#e5b358; font-weight:700;">
-          LRAPX-XXXX-XXXX
+          LRAPX-KEY
         </div>
       </div>
 
@@ -1005,11 +953,16 @@
     <span id="toastMsg">แจ้งเตือน</span>
   </div>
 
-  <!-- ================= JavaScript Core Engine ================= -->
+  <!-- ================= Core JavaScript (เชื่อมต่อ Supabase จริง) ================= -->
   <script>
-    // ข้อมูล Discord Application ของคุณ
+    // 1. ตั้งค่าการเชื่อมต่อ Supabase & Discord ของคุณ
+    const SUPABASE_URL = "https://sfezzbkoondofopsblth.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_CI3OgOPz7nPNOvEUpPpqnQ_P-DI6I7c";
     const DISCORD_CLIENT_ID = "1561942018475819010"; 
     const REDIRECT_URI = window.location.origin + window.location.pathname;
+
+    // เริ่มต้นระบบ Supabase Client
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const translations = {
       th: {
@@ -1034,8 +987,6 @@
         th_item: "สินค้า",
         th_price: "ราคา",
         th_key: "รหัสคีย์ (License Key)",
-        label_username: "ชื่อผู้ใช้งาน (Username)",
-        label_password: "รหัสผ่าน (Password)",
         topup_title: "เติมเงินเข้าบัญชี",
         topup_sub: "เลือกจำนวนเงินเพื่อเติมเข้ากระเป๋า LrapX Hub",
         label_topup_amt: "ระบุจำนวนเงินที่ต้องการเติม (บาท)",
@@ -1043,8 +994,7 @@
         key_success_title: "สั่งซื้อคีย์สำเร็จ!",
         key_success_sub: "นำคีย์ไป Redeem ใน LrapX Hub ได้เลย",
         btn_copy_key: "คัดลอกรหัสคีย์",
-        btn_discord_login: "เข้าสู่ระบบด้วย Discord",
-        auth_divider: "หรือดำเนินการด้วยบัญชีผู้ใช้"
+        btn_discord_login: "เข้าสู่ระบบด้วย Discord"
       },
       en: {
         nav_home: "Home",
@@ -1068,8 +1018,6 @@
         th_item: "Product",
         th_price: "Price",
         th_key: "Key License",
-        label_username: "Username",
-        label_password: "Password",
         topup_title: "Top-up Wallet",
         topup_sub: "Select amount to top-up to your LrapX Hub wallet",
         label_topup_amt: "Enter amount (THB)",
@@ -1077,15 +1025,12 @@
         key_success_title: "Purchase Successful!",
         key_success_sub: "Redeem this key inside LrapX Hub",
         btn_copy_key: "Copy License Key",
-        btn_discord_login: "Continue with Discord",
-        auth_divider: "Or continue with username"
+        btn_discord_login: "Continue with Discord"
       }
     };
 
     let currentLang = 'th';
-    let authMode = 'login';
     let currentUser = JSON.parse(localStorage.getItem('lrapx_user')) || null;
-    let purchaseHistory = JSON.parse(localStorage.getItem('lrapx_history')) || [];
 
     function setLanguage(lang) {
       currentLang = lang;
@@ -1101,6 +1046,7 @@
       localStorage.setItem('preferred_lang', lang);
     }
 
+    // อัปเดต UI หน้าจอ
     function updateUIState() {
       const balanceEl = document.getElementById('userBalanceText');
       const loginBtn = document.getElementById('navLoginBtn');
@@ -1112,39 +1058,49 @@
         loginBtn.style.display = 'none';
         profileBar.style.display = 'flex';
         displayName.textContent = currentUser.username;
-        balanceEl.textContent = `฿${currentUser.balance.toFixed(2)}`;
+        balanceEl.textContent = `฿${parseFloat(currentUser.balance || 0).toFixed(2)}`;
 
-        if (currentUser.isDiscord && currentUser.avatar) {
+        if (currentUser.avatar) {
           avatarBadge.innerHTML = `<img src="${currentUser.avatar}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
-        } else {
-          avatarBadge.innerHTML = `<i class="fa-regular fa-user"></i>`;
-          avatarBadge.style.background = "#333";
         }
       } else {
         loginBtn.style.display = 'flex';
         profileBar.style.display = 'none';
         balanceEl.textContent = '฿0.00';
       }
-      renderHistoryTable();
     }
 
-    function saveUserState() {
-      if (currentUser) {
-        localStorage.setItem('lrapx_user', JSON.stringify(currentUser));
-      } else {
-        localStorage.removeItem('lrapx_user');
+    // 2. ดึงจำนวนสต็อกคีย์จริงจาก Supabase
+    async function loadStockCounts() {
+      try {
+        // นับสต็อก 30 วัน
+        const { count: count30 } = await supabaseClient
+          .from('script_keys')
+          .select('*', { count: 'exact', head: true })
+          .eq('product_name', 'VIP 30 Days')
+          .eq('is_sold', false);
+
+        // นับสต็อก 10 วัน
+        const { count: count10 } = await supabaseClient
+          .from('script_keys')
+          .select('*', { count: 'exact', head: true })
+          .eq('product_name', 'VIP 10 Days')
+          .eq('is_sold', false);
+
+        document.getElementById('stockBadge30D').textContent = `คงเหลือ: ${count30 ?? 0} ชิ้น`;
+        document.getElementById('stockBadge10D').textContent = `คงเหลือ: ${count10 ?? 0} ชิ้น`;
+      } catch (err) {
+        console.error("Load stock error:", err);
       }
-      updateUIState();
     }
 
-    // ฟังก์ชันไปหน้า Discord จริง (แก้ไขการเช็คแล้ว)
+    // 3. ระบบ Discord Login
     function handleDiscordLogin() {
       const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
       window.location.href = discordAuthUrl;
     }
 
-    // ตรวจสอบการ Callback กลับมาจาก Discord
-    function checkDiscordCallback() {
+    async function checkDiscordCallback() {
       const fragment = new URLSearchParams(window.location.hash.slice(1));
       const accessToken = fragment.get('access_token');
       const tokenType = fragment.get('token_type');
@@ -1152,88 +1108,67 @@
       if (accessToken) {
         history.replaceState(null, null, ' ');
 
-        fetch('https://discord.com/api/users/@me', {
-          headers: {
-            authorization: `${tokenType} ${accessToken}`
-          }
-        })
-        .then(res => res.json())
-        .then(data => {
+        try {
+          // ดึงโปรไฟล์จาก Discord
+          const res = await fetch('https://discord.com/api/users/@me', {
+            headers: { authorization: `${tokenType} ${accessToken}` }
+          });
+          const data = await res.json();
+
           const avatarUrl = data.avatar 
             ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`
             : `https://cdn.discordapp.com/embed/avatars/${(data.id >> 22) % 6}.png`;
 
+          // ตรวจสอบกระเป๋าเงินใน Supabase
+          const { data: walletData } = await supabaseClient
+            .from('wallets')
+            .select('*')
+            .eq('discord_id', data.id)
+            .single();
+
+          let userBalance = 0.00;
+
+          if (walletData) {
+            userBalance = parseFloat(walletData.balance);
+          } else {
+            // สมาชิกใหม่ -> บันทึกเข้า Supabase
+            await supabaseClient.from('wallets').insert([{
+              discord_id: data.id,
+              username: data.global_name || data.username,
+              balance: 0.00,
+              avatar_url: avatarUrl
+            }]);
+          }
+
           currentUser = {
-            username: data.global_name || data.username,
             discordId: data.id,
+            username: data.global_name || data.username,
             avatar: avatarUrl,
-            balance: currentUser?.balance || 0.00,
-            isDiscord: true
+            balance: userBalance
           };
 
-          saveUserState();
+          localStorage.setItem('lrapx_user', JSON.stringify(currentUser));
+          updateUIState();
           showToast(`ยินดีต้อนรับคุณ ${currentUser.username} เข้าสู่ระบบสำเร็จ!`);
-        })
-        .catch(err => {
+        } catch (err) {
           console.error(err);
-          showToast("เกิดข้อผิดพลาดในการเชื่อมต่อ Discord");
-        });
+          showToast("เข้าสู่ระบบ Discord ไม่สำเร็จ");
+        }
       }
-    }
-
-    function openAuthModal(mode) {
-      authMode = mode;
-      switchAuthTab(mode);
-      document.getElementById('authModal').style.display = 'flex';
-    }
-
-    function switchAuthTab(mode) {
-      authMode = mode;
-      const tabLogin = document.getElementById('tabAuthLogin');
-      const tabReg = document.getElementById('tabAuthRegister');
-      const title = document.getElementById('authModalTitle');
-      const submitBtn = document.getElementById('authSubmitBtn');
-
-      if (mode === 'login') {
-        tabLogin.classList.add('active');
-        tabReg.classList.remove('active');
-        title.textContent = currentLang === 'th' ? 'เข้าสู่ระบบ LrapX Hub' : 'Login to LrapX Hub';
-        submitBtn.textContent = currentLang === 'th' ? 'เข้าสู่ระบบ' : 'Login';
-      } else {
-        tabReg.classList.add('active');
-        tabLogin.classList.remove('active');
-        title.textContent = currentLang === 'th' ? 'สมัครสมาชิก LrapX Hub' : 'Register LrapX Hub';
-        submitBtn.textContent = currentLang === 'th' ? 'ยืนยันการสมัคร' : 'Register';
-      }
-    }
-
-    function handleAuthSubmit(e) {
-      e.preventDefault();
-      const userField = document.getElementById('authUsername').value.trim();
-      if (!userField) return;
-
-      currentUser = { 
-        username: userField, 
-        balance: currentUser?.balance || 0.00, 
-        isDiscord: false 
-      };
-
-      saveUserState();
-      closeModals();
-      document.getElementById('authForm').reset();
-      showToast(currentLang === 'th' ? `ยินดีต้อนรับ ${userField}` : `Welcome ${userField}`);
     }
 
     function logoutUser() {
       currentUser = null;
-      saveUserState();
-      showToast(currentLang === 'th' ? 'ออกจากระบบแล้ว' : 'Logged out');
+      localStorage.removeItem('lrapx_user');
+      updateUIState();
+      showToast('ออกจากระบบแล้ว');
     }
 
+    // 4. ระบบเติมเงิน (อัปเดตลง Supabase ทันที)
     function openTopupModal() {
       if (!currentUser) {
-        showToast(currentLang === 'th' ? 'กรุณาเข้าสู่ระบบก่อนเติมเงิน' : 'Please login first');
-        openAuthModal('login');
+        showToast('กรุณาเข้าสู่ระบบ Discord ก่อนเติมเงิน');
+        openAuthModal();
         return;
       }
       document.getElementById('topupModal').style.display = 'flex';
@@ -1243,65 +1178,139 @@
       document.getElementById('topupInput').value = amt;
     }
 
-    function executeTopup() {
+    async function executeTopup() {
       const input = document.getElementById('topupInput');
       const amt = parseFloat(input.value);
 
       if (isNaN(amt) || amt <= 0) {
-        showToast(currentLang === 'th' ? 'กรุณาระบุจำนวนเงินที่ถูกต้อง' : 'Please enter valid amount');
+        showToast('กรุณาระบุจำนวนเงินที่ถูกต้อง');
         return;
       }
 
-      currentUser.balance += amt;
-      saveUserState();
+      const newBalance = parseFloat(currentUser.balance || 0) + amt;
+
+      // อัปเดตใน Supabase
+      const { error } = await supabaseClient
+        .from('wallets')
+        .update({ balance: newBalance, updated_at: new Date() })
+        .eq('discord_id', currentUser.discordId);
+
+      if (error) {
+        showToast("เกิดข้อผิดพลาดในการเติมเงิน");
+        console.error(error);
+        return;
+      }
+
+      currentUser.balance = newBalance;
+      localStorage.setItem('lrapx_user', JSON.stringify(currentUser));
+      updateUIState();
       closeModals();
       input.value = '';
-      showToast(currentLang === 'th' ? `เติมเงินสำเร็จ ฿${amt.toFixed(2)}!` : `Top-up ฿${amt.toFixed(2)} successful!`);
+      showToast(`เติมเงินสำเร็จ ฿${amt.toFixed(2)}!`);
     }
 
-    function promptPurchase(itemName, price) {
+    // 5. ระบบสั่งซื้อคีย์จริงจาก Supabase
+    async function promptPurchase(productName, price) {
       if (!currentUser) {
-        showToast(currentLang === 'th' ? 'กรุณาเข้าสู่ระบบก่อนซื้อสินค้า' : 'Please login to purchase');
-        openAuthModal('login');
+        showToast('กรุณาเข้าสู่ระบบก่อนซื้อสินค้า');
+        openAuthModal();
         return;
       }
 
-      if (currentUser.balance < price) {
-        showToast(currentLang === 'th' ? `ยอดเงินไม่พอ (ต้องการ ฿${price.toFixed(2)}) กรุณาเติมเงิน` : `Insufficient balance. Please top-up`);
+      if (parseFloat(currentUser.balance) < price) {
+        showToast(`ยอดเงินไม่พอ (ต้องการ ฿${price.toFixed(2)}) กรุณาเติมเงิน`);
         openTopupModal();
         return;
       }
 
-      currentUser.balance -= price;
-      saveUserState();
+      // ดึงคีย์ที่ยังไม่ถูกขายออกมา 1 คีย์
+      const { data: keys, error: keyErr } = await supabaseClient
+        .from('script_keys')
+        .select('*')
+        .eq('product_name', productName)
+        .eq('is_sold', false)
+        .limit(1);
 
-      const randomKey = `LrapX-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+      if (keyErr || !keys || keys.length === 0) {
+        showToast("ขออภัย สินค้าหมดสต็อกชั่วคราว!");
+        return;
+      }
 
-      const purchaseItem = {
-        date: new Date().toLocaleDateString(currentLang === 'th' ? 'th-TH' : 'en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
-        item: itemName,
-        price: `฿${price.toFixed(2)}`,
-        key: randomKey
-      };
+      const targetKey = keys[0];
 
-      purchaseHistory.unshift(purchaseItem);
-      localStorage.setItem('lrapx_history', JSON.stringify(purchaseHistory));
-      renderHistoryTable();
+      // 1. ตัดเงินในกระเป๋า
+      const updatedBalance = parseFloat(currentUser.balance) - price;
+      await supabaseClient
+        .from('wallets')
+        .update({ balance: updatedBalance })
+        .eq('discord_id', currentUser.discordId);
 
-      document.getElementById('newGeneratedKey').textContent = randomKey;
+      // 2. เปลี่ยนสถานะคีย์เป็นขายแล้ว
+      await supabaseClient
+        .from('script_keys')
+        .update({
+          is_sold: true,
+          sold_to_discord_id: currentUser.discordId,
+          sold_to_username: currentUser.username,
+          sold_at: new Date()
+        })
+        .eq('id', targetKey.id);
+
+      // 3. บันทึกลงประวัติการซื้อ (order_history)
+      await supabaseClient
+        .from('order_history')
+        .insert([{
+          discord_id: currentUser.discordId,
+          username: currentUser.username,
+          product_name: productName,
+          price: price,
+          key_code: targetKey.key_code
+        }]);
+
+      // อัปเดตข้อมูลฝั่งผู้ใช้
+      currentUser.balance = updatedBalance;
+      localStorage.setItem('lrapx_user', JSON.stringify(currentUser));
+      updateUIState();
+      loadStockCounts(); // อัปเดตตัวเลขสต็อก
+
+      // แสดง Popup คีย์ที่ได้รับจริง
+      document.getElementById('newGeneratedKey').textContent = targetKey.key_code;
       document.getElementById('successModal').style.display = 'flex';
     }
 
-    function copyGeneratedKey() {
-      const key = document.getElementById('newGeneratedKey').textContent;
-      navigator.clipboard.writeText(key).then(() => {
-        showToast(currentLang === 'th' ? 'คัดลอกรหัสคีย์เรียบร้อยแล้ว!' : 'Key copied to clipboard!');
-      });
-    }
+    // 6. ดึงประวัติการซื้อจาก Supabase
+    async function loadOrderHistory() {
+      if (!currentUser) return;
+      const tbody = document.getElementById('historyTableBody');
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#888; padding:20px;">กำลังโหลดประวัติ...</td></tr>`;
 
-    function copySpecificKey(key) {
-      navigator.clipboard.writeText(key).then(() => {
-        showToast(currentLang === 'th' ? 'คัดลอกรหัสคีย์แล้ว!' : 'Key copied!');
+      const { data: history, error } = await supabaseClient
+        .from('order_history')
+        .select('*')
+        .eq('discord_id', currentUser.discordId)
+        .order('created_at', { ascending: false });
+
+      if (error || !history || history.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#666; padding:30px;">ยังไม่มีประวัติการซื้อคีย์</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = '';
+      history.forEach(item => {
+        const row = document.createElement('tr');
+        const dateStr = new Date(item.created_at).toLocaleDateString('th-TH', { day: '2-digit', month: 'short', year: 'numeric' });
+        row.innerHTML = `
+          <td>${dateStr}</td>
+          <td style="color:#ffffff; font-weight:500;">${item.product_name}</td>
+          <td style="color:#c89565; font-weight:600;">฿${parseFloat(item.price).toFixed(2)}</td>
+          <td>
+            <div class="key-code-box">
+              <span>${item.key_code}</span>
+              <i class="fa-regular fa-copy btn-copy-small" onclick="copySpecificKey('${item.key_code}')" title="คัดลอก"></i>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(row);
       });
     }
 
@@ -1321,34 +1330,25 @@
         histSec.style.display = 'block';
         tabH.classList.add('active');
         tabP.classList.remove('active');
-        renderHistoryTable();
+        loadOrderHistory();
       }
     }
 
-    function renderHistoryTable() {
-      const tbody = document.getElementById('historyTableBody');
-      tbody.innerHTML = '';
-
-      if (purchaseHistory.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#666; padding:30px;">${currentLang === 'th' ? 'ยังไม่มีประวัติการซื้อคีย์' : 'No purchase history yet'}</td></tr>`;
-        return;
-      }
-
-      purchaseHistory.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.date}</td>
-          <td style="color:#ffffff; font-weight:500;">${item.item}</td>
-          <td style="color:#c89565; font-weight:600;">${item.price}</td>
-          <td>
-            <div class="key-code-box">
-              <span>${item.key}</span>
-              <i class="fa-regular fa-copy btn-copy-small" onclick="copySpecificKey('${item.key}')" title="คัดลอก"></i>
-            </div>
-          </td>
-        `;
-        tbody.appendChild(row);
+    function copyGeneratedKey() {
+      const key = document.getElementById('newGeneratedKey').textContent;
+      navigator.clipboard.writeText(key).then(() => {
+        showToast('คัดลอกรหัสคีย์เรียบร้อยแล้ว!');
       });
+    }
+
+    function copySpecificKey(key) {
+      navigator.clipboard.writeText(key).then(() => {
+        showToast('คัดลอกรหัสคีย์แล้ว!');
+      });
+    }
+
+    function openAuthModal() {
+      document.getElementById('authModal').style.display = 'flex';
     }
 
     function closeModals() {
@@ -1362,11 +1362,13 @@
       setTimeout(() => { t.style.display = 'none'; }, 3200);
     }
 
+    // เริ่มทำงานเมื่อเปิดเว็บ
     window.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('preferred_lang') || 'th';
       setLanguage(savedLang);
-      checkDiscordCallback(); // ตรวจสอบสถานะการล็อกอิน Discord อัตโนมัติ
       updateUIState();
+      loadStockCounts(); // โหลดจำนวนสต็อกจริงจาก Supabase
+      checkDiscordCallback(); // เช็คผลการล็อกอิน Discord
     });
   </script>
 </body>
