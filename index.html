@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LrapX Hub - Store & Key License</title>
+  
+  <!-- Google Fonts: Kanit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* Reset & Global */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Kanit', sans-serif;
+    }
+
+    body {
+      background-color: #000000;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 0 24px;
+      width: 100%;
+    }
+
+    /* ================= Top Navigation Bar ================= */
+    .navbar {
+      background-color: #000000;
+      border-bottom: 1px solid #1a1a1a;
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .nav-left, .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .brand-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #181818;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #333;
+    }
+
+    /* Language Switcher */
+    .lang-switcher {
+      display: flex;
+      background: #151515;
+      border: 1px solid #292929;
+      border-radius: 20px;
+      padding: 3px 4px;
+      gap: 2px;
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      color: #888;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: #c89565;
+      color: #000000;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin-left: 10px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #b5b5b5;
+      text-decoration: none;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: #ffffff; }
+
+    .nav-icon-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #151515;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      border: 1px solid #282828;
+    }
+
+    /* Wallet & User Action */
+    .wallet-box {
+      background: #0d0d0d;
+      border: 1px solid #222222;
+      border-radius: 24px;
+      padding: 5px 14px;
+      font-size: 0.9rem;
+      color: #aaa;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wallet-box span.balance-amt {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .btn-topup-nav {
+      background: #222;
+      color: #c89565;
+      border: 1px solid #333;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-topup-nav:hover { background: #c89565; color: #000; }
+
+    .btn-login {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #c89565;
+      color: #000;
+      border: none;
+      padding: 7px 18px;
+      border-radius: 24px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .user-profile {
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-name-tag {
+      font-size: 0.95rem;
+      color: #ffffff;
+      font-weight: 500;
+      background: #141414;
+      border: 1px solid #252525;
+      padding: 5px 14px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .user-avatar-small {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #5865F2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: #fff;
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 1px solid #333;
+      color: #ff5e5e;
+      padding: 6px 12px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .btn-logout:hover { background: #ff5e5e1a; }
+
+    /* ================= Store Header ================= */
+    .store-header {
+      padding-top: 40px;
+      padding-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .store-title-area h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .store-subtitle {
+      color: #9e9e9e;
+      font-size: 1.05rem;
+    }
+
+    .affiliate-card {
+      background: #0c0c0c;
+      border: 1px solid #222;
+      border-radius: 14px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      cursor: pointer;
+    }
+
+    .affiliate-icon {
+      width: 44px;
+      height: 44px;
+      background: #1f1b17;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c89565;
+      font-size: 1.2rem;
+    }
+
+    .affiliate-text h4 {
+      font-size: 0.82rem;
+      color: #888888;
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+    }
+
+    .affiliate-text p {
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    .affiliate-arrow {
+      margin-left: 20px;
+      font-size: 0.9rem;
+      color: #c89565;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-left: 1px solid #222;
+      padding-left: 16px;
+    }
+
+    /* ================= Store Navigation Tabs ================= */
+    .store-tabs {
+      display: flex;
+      gap: 36px;
+      border-bottom: 1px solid #1a1a1a;
+      margin-bottom: 24px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: #7a7a7a;
+      font-size: 1.05rem;
+      font-weight: 500;
+      padding-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .tab-btn.active { color: #ffffff; }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #c89565;
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 36px;
+      overflow-x: auto;
+    }
+
+    .pill-btn {
+      background: #0f0f0f;
+      border: 1px solid #242424;
+      color: #b0b0b0;
+      padding: 7px 20px;
+      border-radius: 24px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .pill-btn.active {
+      background: #c89565;
+      border-color: #c89565;
+      color: #000;
+      font-weight: 500;
+    }
+
+    /* ================= Product Grid & Cards ================= */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 320px));
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .product-card {
+      background: #0a0a0a;
+      border: 1px solid #1c1c1c;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: #383838;
+    }
+
+    .tag-badge {
+      position: absolute;
+      top: 14px;
+      left: 18px;
+      background: #dfdacb;
+      color: #111;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px 4px;
+      border-radius: 4px;
+      letter-spacing: 0.8px;
+      border: 1px dashed #7a7364;
+      z-index: 2;
+    }
+
+    .tag-badge::before {
+      content: '';
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 14px;
+      background: #736b5c;
+    }
+
+    .product-img-box {
+      width: 100%;
+      height: 290px;
+      background: radial-gradient(circle at 50% 60%, #1a1a1a 0%, #050505 80%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .key-box-mockup {
+      width: 175px;
+      height: 235px;
+      background: linear-gradient(135deg, #181818 0%, #0c0c0c 100%);
+      border: 1.5px solid #2a2a2a;
+      border-radius: 8px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .key-box-mockup::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #252525;
+    }
+
+    .key-box-logo {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      text-transform: none;
+    }
+
+    .key-box-logo span {
+      color: #c89565;
+      font-size: 0.78rem;
+      display: block;
+    }
+
+    .golden-key {
+      font-size: 3.8rem;
+      color: #e5b358;
+      filter: drop-shadow(0 0 12px rgba(229, 179, 88, 0.4));
+      transform: rotate(-35deg);
+      margin: 10px 0;
+    }
+
+    .product-info {
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+      border-top: 1px solid #161616;
+    }
+
+    .product-title {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #ffffff;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+
+    .product-desc {
+      font-size: 0.88rem;
+      color: #7b7b7b;
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+
+    .product-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .product-price {
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .btn-buy-card {
+      background: #1c1c1c;
+      color: #c89565;
+      border: 1px solid #333;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .product-card:hover .btn-buy-card {
+      background: #c89565;
+      color: #000;
+    }
+
+    /* ================= History View ================= */
+    #historySection {
+      display: none;
+      margin-bottom: 80px;
+    }
+
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #0a0a0a;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #1c1c1c;
+    }
+
+    .history-table th, .history-table td {
+      padding: 16px;
+      text-align: left;
+      border-bottom: 1px solid #181818;
+    }
+
+    .history-table th {
+      background: #111;
+      color: #888;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .key-code-box {
+      background: #000;
+      border: 1px solid #333;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #c89565;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-copy-small {
+      cursor: pointer;
+      color: #fff;
+      font-size: 0.8rem;
+    }
+    .btn-copy-small:hover { color: #c89565; }
+
+    /* ================= Modal Styles ================= */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 20px;
+    }
+
+    .modal-card {
+      background: #0d0d0d;
+      border: 1px solid #242424;
+      border-radius: 18px;
+      width: 100%;
+      max-width: 440px;
+      padding: 28px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      color: #888;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .modal-close:hover { color: #fff; }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    /* Discord Button */
+    .btn-discord-auth {
+      width: 100%;
+      background: #5865F2;
+      color: #ffffff;
+      border: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      margin-bottom: 18px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-discord-auth:hover {
+      background: #4752c4;
+      transform: translateY(-1px);
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 18px;
+      color: #666;
+      font-size: 0.82rem;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #222;
+    }
+    .auth-divider:not(:empty)::before { margin-right: .8em; }
+    .auth-divider:not(:empty)::after { margin-left: .8em; }
+
+    .auth-tab-switch {
+      display: flex;
+      background: #161616;
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 20px;
+    }
+
+    .auth-tab-btn {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      background: transparent;
+      color: #888;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .auth-tab-btn.active {
+      background: #c89565;
+      color: #000;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      width: 100%;
+      background: #000;
+      border: 1px solid #282828;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: #c89565;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: #c89565;
+      color: #000;
+      border: none;
+      padding: 12px;
+      border-radius: 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .quick-amt-btns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .btn-quick {
+      background: #141414;
+      border: 1px solid #282828;
+      color: #ddd;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .btn-quick:hover { border-color: #c89565; color: #fff; }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #141414;
+      border: 1px solid #c89565;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= Top Navigation Bar ================= -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="nav-left">
+        <a href="#" class="brand">
+          <div class="brand-avatar">
+            <i class="fa-solid fa-bolt" style="color: #c89565;"></i>
+          </div>
+          <span>LrapX Hub</span>
+        </a>
+
+        <!-- TH-EN Switcher -->
+        <div class="lang-switcher" id="langToggle">
+          <button class="lang-btn active" id="btn-th" onclick="setLanguage('th')">TH</button>
+          <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+        </div>
+
+        <div class="nav-icon-circle" title="Discord Community">
+          <i class="fa-brands fa-discord"></i>
+        </div>
+
+        <nav class="nav-links">
+          <a class="nav-link" onclick="switchMainTab('products')"><i class="fa-solid fa-house"></i> <span data-i18n="nav_home">หน้าหลัก</span></a>
+          <a class="nav-link" onclick="openTopupModal()"><i class="fa-solid fa-wallet"></i> <span data-i18n="nav_topup">เติมเงิน</span></a>
+          <a class="nav-link" onclick="switchMainTab('history')"><i class="fa-solid fa-file-invoice"></i> <span data-i18n="nav_history">ประวัติ</span></a>
+        </nav>
+      </div>
+
+      <!-- Right side: Wallet & Login/Profile -->
+      <div class="nav-right">
+        <div class="wallet-box">
+          <span data-i18n="wallet_label">ยอดเงิน</span> 
+          <span class="balance-amt" id="userBalanceText">฿0.00</span>
+          <button class="btn-topup-nav" onclick="openTopupModal()" title="เติมเงิน">+ เติมเงิน</button>
+        </div>
+
+        <!-- Login Button -->
+        <button class="btn-login" id="navLoginBtn" onclick="openAuthModal('login')">
+          <i class="fa-regular fa-user"></i>
+          <span data-i18n="btn_login">เข้าสู่ระบบ</span>
+        </button>
+
+        <!-- Profile Bar -->
+        <div class="user-profile" id="userProfileBar">
+          <div class="user-name-tag">
+            <div class="user-avatar-small" id="userAvatarBadge"><i class="fa-brands fa-discord"></i></div>
+            <span id="displayUsername">DiscordUser</span>
+          </div>
+          <button class="btn-logout" onclick="logoutUser()" title="ออกจากระบบ"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= Main Content Container ================= -->
+  <main class="container">
+    
+    <!-- Header: Title & Affiliate Card -->
+    <section class="store-header">
+      <div class="store-title-area">
+        <h1 data-i18n="store_heading">ร้านค้า</h1>
+        <div class="store-subtitle" data-i18n="store_stats">2 สินค้า · ราคา ฿59.00 – ฿109.00</div>
+      </div>
+
+      <div class="affiliate-card">
+        <div class="affiliate-icon"><i class="fa-solid fa-share-nodes"></i></div>
+        <div class="affiliate-text">
+          <h4 data-i18n="aff_title">โปรแกรม AFFILIATE</h4>
+          <p><span data-i18n="aff_desc">7% ค่าคอมมิชชั่นจากยอดขายผ่านลิงก์</span></p>
+        </div>
+        <div class="affiliate-arrow">
+          <span data-i18n="aff_detail">ดูรายละเอียด</span> <i class="fa-solid fa-angle-right"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="store-tabs">
+      <button class="tab-btn active" id="tabBtnProducts" onclick="switchMainTab('products')">
+        <i class="fa-solid fa-box-archive"></i>
+        <span data-i18n="tab_products">สินค้า</span>
+      </button>
+      <button class="tab-btn" id="tabBtnHistory" onclick="switchMainTab('history')">
+        <i class="fa-regular fa-file-lines"></i>
+        <span data-i18n="tab_history">ประวัติการซื้อ</span>
+      </button>
+    </nav>
+
+    <!-- SECTION: Products Grid View -->
+    <div id="productsSection">
+      <div class="filter-pills">
+        <button class="pill-btn active" data-i18n="pill_all">ทั้งหมด</button>
+        <button class="pill-btn">License Key</button>
+        <button class="pill-btn">LrapX Hub VIP</button>
+      </div>
+
+      <section class="products-grid">
+        <!-- 30 Days -->
+        <div class="product-card" onclick="promptPurchase('LrapX Hub VIP 30 Days', 109.00)">
+          <div class="tag-badge">HOT</div>
+          <div class="product-img-box">
+            <div class="key-box-mockup">
+              <i class="fa-solid fa-key" style="color: #c89565; font-size: 0.9rem; margin-bottom: 4px;"></i>
+              <div class="key-box-logo">
+                LrapX Hub
+                <span>SERVICE KEY</span>
+              </div>
+              <i class="fa-solid fa-key golden-key"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <div>
+              <h3 class="product-title" data-i18n="prod_1_title">LrapX Hub สคริปพรีเมี่ยม 30วัน</h3>
+              <p class="product-desc" data-i18n="prod_desc">ปลดล็อคคล่องหน นำคีย์ไป redeem -> get script</p>
+            </div>
+            <div class="product-bottom">
+              <div class="product-price">฿109.00</div>
+              <button class="btn-buy-card" data-i18n="btn_buy_action">ซื้อทันที</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10 Days -->
+        <div class="product-card" onclick="promptPurchase('LrapX Hub VIP 10 Days', 59.00)">
+          <div class="tag-badge">LIMITED</div>
+          <div class="product-img-box">
+            <div class="key-box-mockup">
+              <i class="fa-solid fa-key" style="color: #c89565; font-size: 0.9rem; margin-bottom: 4px;"></i>
+              <div class="key-box-logo">
+                LrapX Hub
+                <span>SERVICE KEY</span>
+              </div>
+              <i class="fa-solid fa-key golden-key"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <div>
+              <h3 class="product-title" data-i18n="prod_2_title">LrapX Hub สคริปพรีเมี่ยม 10วัน</h3>
+              <p class="product-desc" data-i18n="prod_desc">ปลดล็อคคล่องหน นำคีย์ไป redeem -> get script</p>
+            </div>
+            <div class="product-bottom">
+              <div class="product-price">฿59.00</div>
+              <button class="btn-buy-card" data-i18n="btn_buy_action">ซื้อทันที</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- SECTION: Purchase History View -->
+    <div id="historySection">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th data-i18n="th_date">วันที่สั่งซื้อ</th>
+            <th data-i18n="th_item">สินค้า</th>
+            <th data-i18n="th_price">ราคา</th>
+            <th data-i18n="th_key">รหัสคีย์ (License Key)</th>
+          </tr>
+        </thead>
+        <tbody id="historyTableBody">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- ================= MODAL: Login & Register (พร้อม Discord) ================= -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModals()"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="modal-title" id="authModalTitle">เข้าสู่ระบบ LrapX Hub</h3>
+
+      <!-- Discord Login Button -->
+      <button type="button" class="btn-discord-auth" onclick="handleDiscordLogin()">
+        <i class="fa-brands fa-discord" style="font-size: 1.3rem;"></i>
+        <span data-i18n="btn_discord_login">เข้าสู่ระบบด้วย Discord</span>
+      </button>
+
+      <div class="auth-divider" data-i18n="auth_divider">หรือดำเนินการด้วยบัญชีผู้ใช้</div>
+
+      <div class="auth-tab-switch">
+        <button class="auth-tab-btn active" id="tabAuthLogin" onclick="switchAuthTab('login')">เข้าสู่ระบบ</button>
+        <button class="auth-tab-btn" id="tabAuthRegister" onclick="switchAuthTab('register')">สมัครสมาชิก</button>
+      </div>
+
+      <form id="authForm" onsubmit="handleAuthSubmit(event)">
+        <div class="form-group">
+          <label data-i18n="label_username">ชื่อผู้ใช้งาน (Username)</label>
+          <input type="text" id="authUsername" class="form-control" placeholder="กรอกชื่อผู้ใช้..." required>
+        </div>
+        <div class="form-group">
+          <label data-i18n="label_password">รหัสผ่าน (Password)</label>
+          <input type="password" id="authPassword" class="form-control" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-submit" id="authSubmitBtn">เข้าสู่ระบบ</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: Top-up Wallet ================= -->
+  <div class="modal-overlay" id="topupModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModals()"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="modal-title" data-i18n="topup_title">เติมเงินเข้าบัญชี</h3>
+      
+      <p style="font-size:0.85rem; color:#888; margin-bottom:14px; text-align:center;" data-i18n="topup_sub">
+        เลือกจำนวนเงินเพื่อเติมเข้ากระเป๋า LrapX Hub
+      </p>
+
+      <div class="quick-amt-btns">
+        <button class="btn-quick" onclick="setTopupAmt(50)">+ ฿50</button>
+        <button class="btn-quick" onclick="setTopupAmt(100)">+ ฿100</button>
+        <button class="btn-quick" onclick="setTopupAmt(300)">+ ฿300</button>
+        <button class="btn-quick" onclick="setTopupAmt(500)">+ ฿500</button>
+        <button class="btn-quick" onclick="setTopupAmt(1000)">+ ฿1000</button>
+        <button class="btn-quick" onclick="setTopupAmt(2000)">+ ฿2000</button>
+      </div>
+
+      <div class="form-group">
+        <label data-i18n="label_topup_amt">ระบุจำนวนเงินที่ต้องการเติม (บาท)</label>
+        <input type="number" id="topupInput" class="form-control" placeholder="เช่น 100" min="10" required>
+      </div>
+
+      <button type="button" class="btn-submit" onclick="executeTopup()" data-i18n="btn_confirm_topup">
+        ยืนยันการเติมเงิน
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: Key Success ================= -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-card" style="text-align: center;">
+      <button class="modal-close" onclick="closeModals()"><i class="fa-solid fa-xmark"></i></button>
+      <i class="fa-solid fa-circle-check" style="font-size: 3rem; color: #2ecc71; margin-bottom: 12px;"></i>
+      <h3 class="modal-title" data-i18n="key_success_title">สั่งซื้อคีย์สำเร็จ!</h3>
+      <p style="color:#aaa; font-size:0.9rem; margin-bottom:16px;" data-i18n="key_success_sub">นำคีย์ไป Redeem ใน LrapX Hub ได้เลย</p>
+      
+      <div style="background:#000; border:1px solid #333; padding:14px; border-radius:10px; margin-bottom:20px;">
+        <div id="newGeneratedKey" style="font-family: monospace; font-size: 1.15rem; color:#e5b358; font-weight:700;">
+          LRAPX-XXXX-XXXX
+        </div>
+      </div>
+
+      <button class="btn-submit" onclick="copyGeneratedKey()" data-i18n="btn_copy_key">
+        <i class="fa-regular fa-copy"></i> คัดลอกรหัสคีย์
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Notification Box -->
+  <div class="toast" id="toastBox">
+    <i class="fa-solid fa-bell" style="color: #c89565;"></i>
+    <span id="toastMsg">แจ้งเตือน</span>
+  </div>
+
+  <!-- ================= JavaScript Core Engine ================= -->
+  <script>
+    /* ================= 1. Translations (TH / EN) ================= */
+    const translations = {
+      th: {
+        nav_home: "หน้าหลัก",
+        nav_topup: "เติมเงิน",
+        nav_history: "ประวัติ",
+        wallet_label: "ยอดเงิน",
+        btn_login: "เข้าสู่ระบบ",
+        store_heading: "ร้านค้า",
+        store_stats: "2 สินค้า · ราคา ฿59.00 – ฿109.00",
+        aff_title: "โปรแกรม AFFILIATE",
+        aff_desc: "7% ค่าคอมมิชชั่นจากยอดขายผ่านลิงก์",
+        aff_detail: "ดูรายละเอียด",
+        tab_products: "สินค้า",
+        tab_history: "ประวัติการซื้อ",
+        pill_all: "ทั้งหมด",
+        prod_1_title: "LrapX Hub สคริปพรีเมี่ยม 30วัน",
+        prod_2_title: "LrapX Hub สคริปพรีเมี่ยม 10วัน",
+        prod_desc: "ปลดล็อคคล่องหน นำคีย์ไป redeem -> get script",
+        btn_buy_action: "ซื้อทันที",
+        th_date: "วันที่สั่งซื้อ",
+        th_item: "สินค้า",
+        th_price: "ราคา",
+        th_key: "รหัสคีย์ (License Key)",
+        label_username: "ชื่อผู้ใช้งาน (Username)",
+        label_password: "รหัสผ่าน (Password)",
+        topup_title: "เติมเงินเข้าบัญชี",
+        topup_sub: "เลือกจำนวนเงินเพื่อเติมเข้ากระเป๋า LrapX Hub",
+        label_topup_amt: "ระบุจำนวนเงินที่ต้องการเติม (บาท)",
+        btn_confirm_topup: "ยืนยันการเติมเงิน",
+        key_success_title: "สั่งซื้อคีย์สำเร็จ!",
+        key_success_sub: "นำคีย์ไป Redeem ใน LrapX Hub ได้เลย",
+        btn_copy_key: "คัดลอกรหัสคีย์",
+        btn_discord_login: "เข้าสู่ระบบด้วย Discord",
+        auth_divider: "หรือดำเนินการด้วยบัญชีผู้ใช้"
+      },
+      en: {
+        nav_home: "Home",
+        nav_topup: "Top-up",
+        nav_history: "History",
+        wallet_label: "Balance",
+        btn_login: "Login",
+        store_heading: "Store",
+        store_stats: "2 Products · Price ฿59.00 – ฿109.00",
+        aff_title: "AFFILIATE PROGRAM",
+        aff_desc: "7% commission from link sales",
+        aff_detail: "Details",
+        tab_products: "Products",
+        tab_history: "Purchase History",
+        pill_all: "All",
+        prod_1_title: "LrapX Hub Premium Script 30 Days",
+        prod_2_title: "LrapX Hub Premium Script 10 Days",
+        prod_desc: "Unlock all features. Redeem key -> get script",
+        btn_buy_action: "Buy Now",
+        th_date: "Date",
+        th_item: "Product",
+        th_price: "Price",
+        th_key: "Key License",
+        label_username: "Username",
+        label_password: "Password",
+        topup_title: "Top-up Wallet",
+        topup_sub: "Select amount to top-up to your LrapX Hub wallet",
+        label_topup_amt: "Enter amount (THB)",
+        btn_confirm_topup: "Confirm Top-up",
+        key_success_title: "Purchase Successful!",
+        key_success_sub: "Redeem this key inside LrapX Hub",
+        btn_copy_key: "Copy License Key",
+        btn_discord_login: "Continue with Discord",
+        auth_divider: "Or continue with username"
+      }
+    };
+
+    let currentLang = 'th';
+    let authMode = 'login';
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.getElementById('btn-th').classList.toggle('active', lang === 'th');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      localStorage.setItem('preferred_lang', lang);
+    }
+
+    /* ================= 2. User & Wallet State Management ================= */
+    let currentUser = JSON.parse(localStorage.getItem('lrapx_user')) || null;
+    let purchaseHistory = JSON.parse(localStorage.getItem('lrapx_history')) || [];
+
+    function updateUIState() {
+      const balanceEl = document.getElementById('userBalanceText');
+      const loginBtn = document.getElementById('navLoginBtn');
+      const profileBar = document.getElementById('userProfileBar');
+      const displayName = document.getElementById('displayUsername');
+      const avatarBadge = document.getElementById('userAvatarBadge');
+
+      if (currentUser) {
+        loginBtn.style.display = 'none';
+        profileBar.style.display = 'flex';
+        displayName.textContent = currentUser.username;
+        balanceEl.textContent = `฿${currentUser.balance.toFixed(2)}`;
+
+        if (currentUser.isDiscord) {
+          avatarBadge.innerHTML = `<i class="fa-brands fa-discord"></i>`;
+          avatarBadge.style.background = "#5865F2";
+        } else {
+          avatarBadge.innerHTML = `<i class="fa-regular fa-user"></i>`;
+          avatarBadge.style.background = "#333";
+        }
+      } else {
+        loginBtn.style.display = 'flex';
+        profileBar.style.display = 'none';
+        balanceEl.textContent = '฿0.00';
+      }
+      renderHistoryTable();
+    }
+
+    function saveUserState() {
+      if (currentUser) {
+        localStorage.setItem('lrapx_user', JSON.stringify(currentUser));
+      } else {
+        localStorage.removeItem('lrapx_user');
+      }
+      updateUIState();
+    }
+
+    /* ================= 3. Authentication & Discord Login ================= */
+    function openAuthModal(mode) {
+      authMode = mode;
+      switchAuthTab(mode);
+      document.getElementById('authModal').style.display = 'flex';
+    }
+
+    function switchAuthTab(mode) {
+      authMode = mode;
+      const tabLogin = document.getElementById('tabAuthLogin');
+      const tabReg = document.getElementById('tabAuthRegister');
+      const title = document.getElementById('authModalTitle');
+      const submitBtn = document.getElementById('authSubmitBtn');
+
+      if (mode === 'login') {
+        tabLogin.classList.add('active');
+        tabReg.classList.remove('active');
+        title.textContent = currentLang === 'th' ? 'เข้าสู่ระบบ LrapX Hub' : 'Login to LrapX Hub';
+        submitBtn.textContent = currentLang === 'th' ? 'เข้าสู่ระบบ' : 'Login';
+      } else {
+        tabReg.classList.add('active');
+        tabLogin.classList.remove('active');
+        title.textContent = currentLang === 'th' ? 'สมัครสมาชิก LrapX Hub' : 'Register LrapX Hub';
+        submitBtn.textContent = currentLang === 'th' ? 'ยืนยันการสมัคร' : 'Register';
+      }
+    }
+
+    // ฟังก์ชันเข้าสู่ระบบด้วย Discord
+    function handleDiscordLogin() {
+      // สามารถใส่ URL OAuth2 ของ Discord Bot จริงตรงนี้ได้ เช่น:
+      // window.location.href = "https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&response_type=code&scope=identify";
+
+      // การทำงานจำลองดึงบัญชี Discord เข้าสู่ระบบทันที:
+      const randomDiscordTag = Math.floor(1000 + Math.random() * 9000);
+      currentUser = {
+        username: `LrapX_User#${randomDiscordTag}`,
+        balance: currentUser?.balance || 0.00,
+        isDiscord: true
+      };
+
+      saveUserState();
+      closeModals();
+      showToast(currentLang === 'th' ? `เชื่อมต่อ Discord สำเร็จ! ยินดีต้อนรับ ${currentUser.username}` : `Connected with Discord! Welcome ${currentUser.username}`);
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const userField = document.getElementById('authUsername').value.trim();
+      if (!userField) return;
+
+      if (authMode === 'register') {
+        currentUser = { username: userField, balance: 0.00, isDiscord: false };
+        showToast(currentLang === 'th' ? `ยินดีต้อนรับคุณ ${userField} สมัครสมาชิกสำเร็จ!` : `Welcome ${userField}, registered successfully!`);
+      } else {
+        currentUser = { username: userField, balance: currentUser?.balance || 0.00, isDiscord: false };
+        showToast(currentLang === 'th' ? `ยินดีต้อนรับกลับ ${userField}` : `Welcome back ${userField}!`);
+      }
+
+      saveUserState();
+      closeModals();
+      document.getElementById('authForm').reset();
+    }
+
+    function logoutUser() {
+      currentUser = null;
+      saveUserState();
+      showToast(currentLang === 'th' ? 'ออกจากระบบแล้ว' : 'Logged out');
+    }
+
+    /* ================= 4. Top-up Wallet ================= */
+    function openTopupModal() {
+      if (!currentUser) {
+        showToast(currentLang === 'th' ? 'กรุณาเข้าสู่ระบบก่อนเติมเงิน' : 'Please login first');
+        openAuthModal('login');
+        return;
+      }
+      document.getElementById('topupModal').style.display = 'flex';
+    }
+
+    function setTopupAmt(amt) {
+      document.getElementById('topupInput').value = amt;
+    }
+
+    function executeTopup() {
+      const input = document.getElementById('topupInput');
+      const amt = parseFloat(input.value);
+
+      if (isNaN(amt) || amt <= 0) {
+        showToast(currentLang === 'th' ? 'กรุณาระบุจำนวนเงินที่ถูกต้อง' : 'Please enter valid amount');
+        return;
+      }
+
+      currentUser.balance += amt;
+      saveUserState();
+      closeModals();
+      input.value = '';
+      showToast(currentLang === 'th' ? `เติมเงินสำเร็จ ฿${amt.toFixed(2)}!` : `Top-up ฿${amt.toFixed(2)} successful!`);
+    }
+
+    /* ================= 5. Purchase Engine ================= */
+    function promptPurchase(itemName, price) {
+      if (!currentUser) {
+        showToast(currentLang === 'th' ? 'กรุณาเข้าสู่ระบบก่อนซื้อสินค้า' : 'Please login to purchase');
+        openAuthModal('login');
+        return;
+      }
+
+      if (currentUser.balance < price) {
+        showToast(currentLang === 'th' ? `ยอดเงินไม่เพียงพอ (ต้องการ ฿${price.toFixed(2)}) กรุณาเติมเงิน` : `Insufficient balance. Please top-up`);
+        openTopupModal();
+        return;
+      }
+
+      // หักยอดเงิน
+      currentUser.balance -= price;
+      saveUserState();
+
+      // สร้างคีย์สุ่มสำหรับ LrapX Hub
+      const randomKey = `LrapX-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+
+      // บันทึกประวัติ
+      const purchaseItem = {
+        date: new Date().toLocaleDateString(currentLang === 'th' ? 'th-TH' : 'en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
+        item: itemName,
+        price: `฿${price.toFixed(2)}`,
+        key: randomKey
+      };
+
+      purchaseHistory.unshift(purchaseItem);
+      localStorage.setItem('lrapx_history', JSON.stringify(purchaseHistory));
+      renderHistoryTable();
+
+      // แสดง Popup คีย์ที่ได้รับ
+      document.getElementById('newGeneratedKey').textContent = randomKey;
+      document.getElementById('successModal').style.display = 'flex';
+    }
+
+    function copyGeneratedKey() {
+      const key = document.getElementById('newGeneratedKey').textContent;
+      navigator.clipboard.writeText(key).then(() => {
+        showToast(currentLang === 'th' ? 'คัดลอกรหัสคีย์เรียบร้อยแล้ว!' : 'Key copied to clipboard!');
+      });
+    }
+
+    function copySpecificKey(key) {
+      navigator.clipboard.writeText(key).then(() => {
+        showToast(currentLang === 'th' ? 'คัดลอกรหัสคีย์แล้ว!' : 'Key copied!');
+      });
+    }
+
+    /* ================= 6. Tab & History View ================= */
+    function switchMainTab(tab) {
+      const prodSec = document.getElementById('productsSection');
+      const histSec = document.getElementById('historySection');
+      const tabP = document.getElementById('tabBtnProducts');
+      const tabH = document.getElementById('tabBtnHistory');
+
+      if (tab === 'products') {
+        prodSec.style.display = 'block';
+        histSec.style.display = 'none';
+        tabP.classList.add('active');
+        tabH.classList.remove('active');
+      } else {
+        prodSec.style.display = 'none';
+        histSec.style.display = 'block';
+        tabH.classList.add('active');
+        tabP.classList.remove('active');
+        renderHistoryTable();
+      }
+    }
+
+    function renderHistoryTable() {
+      const tbody = document.getElementById('historyTableBody');
+      tbody.innerHTML = '';
+
+      if (purchaseHistory.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#666; padding:30px;">${currentLang === 'th' ? 'ยังไม่มีประวัติการซื้อคีย์' : 'No purchase history yet'}</td></tr>`;
+        return;
+      }
+
+      purchaseHistory.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.date}</td>
+          <td style="color:#ffffff; font-weight:500;">${item.item}</td>
+          <td style="color:#c89565; font-weight:600;">${item.price}</td>
+          <td>
+            <div class="key-code-box">
+              <span>${item.key}</span>
+              <i class="fa-regular fa-copy btn-copy-small" onclick="copySpecificKey('${item.key}')" title="คัดลอก"></i>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    /* ================= 7. Utilities & Modal Controls ================= */
+    function closeModals() {
+      document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toastBox');
+      document.getElementById('toastMsg').textContent = msg;
+      t.style.display = 'flex';
+      setTimeout(() => { t.style.display = 'none'; }, 3200);
+    }
+
+    // เริ่มต้นระบบ
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('preferred_lang') || 'th';
+      setLanguage(savedLang);
+      updateUIState();
+    });
+  </script>
+</body>
+</html>
